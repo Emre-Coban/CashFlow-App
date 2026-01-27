@@ -18,8 +18,8 @@ class Expense {
     var amount: Double
     var date: Date
     
-    init(id: UUID, title: String, amount: Double, date: Date) {
-        self.id = id
+    init(title: String, amount: Double, date: Date = Date()) {
+        self.id = UUID()
         self.title = title
         self.amount = amount
         self.date = date
