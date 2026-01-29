@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     
     private let tableView: UITableView = {
         let tableView = UITableView()
-        tableView.register(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.register(ExpenseCell.self, forCellReuseIdentifier: "cell")
         return tableView
     }()
 
@@ -49,13 +49,14 @@ class ViewController: UIViewController {
     private func updateUI() {
         tableView.reloadData()
         
-        totalLabel.text = "Total: $\(viewModel.totalExpense())"
+        totalLabel.text = "Total Expense: $\(viewModel.totalExpense())"
     }
     
     private func setupHeader() {
         let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
         headerView.backgroundColor = .systemBlue
         tableView.tableHeaderView = headerView
+        
         
         totalLabel.frame = CGRect(x: 20, y: 0, width: headerView.frame.width, height: headerView.frame.height)
         headerView.addSubview(totalLabel)
@@ -109,9 +110,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath)
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "cell", for: indexPath) as? ExpenseCell else {
+            return UITableViewCell()
+        }
         let expense = viewModel.expenses[indexPath.row]
-        cell.textLabel?.text = "\(expense.title) - $\(expense.amount)"
+        cell.configure(with: expense)
         return cell
     }
     
