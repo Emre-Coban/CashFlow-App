@@ -21,7 +21,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         setupUI()
-        
+        setupBindings()
     }
     
     private func setupUI() {
@@ -37,8 +37,42 @@ class ViewController: UIViewController {
         
     }
     
+    private func setupBindings() {
+        viewModel.didUpdate = { [weak self] in
+            self?.tableView.reloadData()
+        }
+    }
+    
     @objc private func didTapAdd() {
-        print("Ekle butonuna basıldı")
+        let alert = UIAlertController(title: "New Expense", message: "Enter the expense details", preferredStyle: .alert)
+        
+        alert.addTextField { title in
+            title.placeholder = "e.g., Coffee"
+            title.tag = 0
+        }
+        
+        alert.addTextField { amount in
+            amount.placeholder = "e.g., 5"
+            amount.keyboardType = .numberPad
+            amount.tag = 1
+        }
+        
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel)
+        let add = UIAlertAction(title: "Add", style: .default) { [weak alert, weak self] _ in
+            
+            guard let titleString = alert?.textFields?[0].text, !titleString.isEmpty, let amountString = alert?.textFields?[1].text, let amountValue = Double(amountString) else {
+                print("Eksik veya hatalı giriş yapıldı")
+                return
+            }
+            
+        
+            self?.viewModel.addExpense(title: titleString, amount: amountValue)
+        }
+        
+        alert.addAction(cancel)
+        alert.addAction(add)
+        
+        present(alert, animated: true)
     }
     
 }
@@ -55,6 +89,11 @@ extension ViewController: UITableViewDelegate, UITableViewDataSource {
         return cell
     }
     
+    func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+        if editingStyle == .delete {
+            viewModel.deleteExpense(at: indexPath.row)
+        }
+    }
     
 }
 
