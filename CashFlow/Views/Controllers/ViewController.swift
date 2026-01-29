@@ -9,8 +9,15 @@ import UIKit
 import SwiftUI
 
 class ViewController: UIViewController {
-    
+
     private let viewModel = ExpenseViewModel()
+    
+    let totalLabel: UILabel = {
+        let label = UILabel()
+        label.font = .systemFont(ofSize: 24, weight: .bold)
+        label.textColor = .white
+        return label
+    }()
     
     private let tableView: UITableView = {
         let tableView = UITableView()
@@ -22,6 +29,8 @@ class ViewController: UIViewController {
         super.viewDidLoad()
         setupUI()
         setupBindings()
+        setupHeader()
+        updateUI()
     }
     
     private func setupUI() {
@@ -37,9 +46,25 @@ class ViewController: UIViewController {
         
     }
     
+    private func updateUI() {
+        tableView.reloadData()
+        
+        totalLabel.text = "Total: $\(viewModel.totalExpense())"
+    }
+    
+    private func setupHeader() {
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        headerView.backgroundColor = .systemBlue
+        tableView.tableHeaderView = headerView
+        
+        totalLabel.frame = CGRect(x: 20, y: 0, width: headerView.frame.width, height: headerView.frame.height)
+        headerView.addSubview(totalLabel)
+    }
+    
     private func setupBindings() {
         viewModel.didUpdate = { [weak self] in
-            self?.tableView.reloadData()
+            
+            self?.updateUI()
         }
     }
     
@@ -65,8 +90,9 @@ class ViewController: UIViewController {
                 return
             }
             
-        
-            self?.viewModel.addExpense(title: titleString, amount: amountValue)
+            let capitalizedTitle = titleString.capitalized
+            
+            self?.viewModel.addExpense(title: capitalizedTitle, amount: amountValue)
         }
         
         alert.addAction(cancel)

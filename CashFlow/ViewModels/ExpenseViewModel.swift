@@ -18,11 +18,17 @@ class ExpenseViewModel {
     
     // Arayüzü güncellemek için kullanılacak Closure
     var didUpdate: (() -> Void)?
+
     
     // Başlatıcı
     init() {
         
         setupDatabase()
+    }
+    
+    func totalExpense() -> Double {
+        let totalExpense = expenses.reduce(0.0) { $0 + $1.amount }
+        return totalExpense
     }
     
     private func setupDatabase() {
