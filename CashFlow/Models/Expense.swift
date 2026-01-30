@@ -8,6 +8,11 @@
 import Foundation
 import SwiftData
 
+enum TransactionType: String, Codable {
+    case income
+    case expense
+}
+
 
 @Model
 class Expense {
@@ -17,11 +22,13 @@ class Expense {
     var title: String
     var amount: Double
     var date: Date
+    var type: TransactionType
     
-    init(title: String, amount: Double, date: Date = Date()) {
+    init(title: String, amount: Double, date: Date = Date(), type: TransactionType) {
         self.id = UUID()
         self.title = title
         self.amount = amount
         self.date = date
+        self.type = type
     }
 }

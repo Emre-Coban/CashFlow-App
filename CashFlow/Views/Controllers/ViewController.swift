@@ -49,7 +49,7 @@ class ViewController: UIViewController {
     private func updateUI() {
         tableView.reloadData()
         
-        totalLabel.text = "Total Expense: $\(viewModel.totalExpense())"
+        totalLabel.text = "Total Expense: \(viewModel.totalExpense().asCurrency())"
     }
     
     private func setupHeader() {
@@ -70,7 +70,29 @@ class ViewController: UIViewController {
     }
     
     @objc private func didTapAdd() {
-        let alert = UIAlertController(title: "New Expense", message: "Enter the expense details", preferredStyle: .alert)
+        let showAlert = UIAlertController(title: "Select Transaction Type", message: "Is this an income or an expense?", preferredStyle: .actionSheet)
+        
+        let incomeButton = UIAlertAction(title: "Income", style: .default) { _ in
+            self.showAddAlert(type: .income)
+        }
+        // Income Butonunu yeşile çevirdik "Gelir" butonu bu sayede daha anlaşılır oldu 
+        incomeButton.setValue(UIColor.systemGreen, forKey: "titleTextColor")
+        
+        let expenseButton = UIAlertAction(title: "Expense", style: .destructive) { _ in
+            self.showAddAlert(type: .expense)
+        }
+        
+        let cancelButton = UIAlertAction(title: "Cancel", style: .cancel)
+        
+        showAlert.addAction(incomeButton)
+        showAlert.addAction(expenseButton)
+        showAlert.addAction(cancelButton)
+        
+        present(showAlert, animated: true)
+    }
+    
+    private func showAddAlert(type: TransactionType) {
+        let alert = UIAlertController(title: "New \(type.rawValue)", message: "Please enter the details", preferredStyle: .alert)
         
         alert.addTextField { title in
             title.placeholder = "e.g., Coffee"
@@ -79,21 +101,27 @@ class ViewController: UIViewController {
         
         alert.addTextField { amount in
             amount.placeholder = "e.g., 5"
-            amount.keyboardType = .numberPad
+            amount.keyboardType = .decimalPad
             amount.tag = 1
         }
         
         let cancel = UIAlertAction(title: "Cancel", style: .cancel)
         let add = UIAlertAction(title: "Add", style: .default) { [weak alert, weak self] _ in
             
-            guard let titleString = alert?.textFields?[0].text, !titleString.isEmpty, let amountString = alert?.textFields?[1].text, let amountValue = Double(amountString) else {
+            guard let amountString = alert?.textFields?[1].text else { return }
+            
+            // Kullanıcı fiyatı yazınca "15,60" -> "15.60" olur
+            let cleanAmountString = amountString.replacingOccurrences(of: ",", with: ".")
+            
+            guard let titleString = alert?.textFields?[0].text, !titleString.isEmpty,
+                  let amountValue = Double(cleanAmountString) else {
                 print("Eksik veya hatalı giriş yapıldı")
                 return
             }
             
             let capitalizedTitle = titleString.capitalized
             
-            self?.viewModel.addExpense(title: capitalizedTitle, amount: amountValue)
+            self?.viewModel.addExpense(title: capitalizedTitle, amount: amountValue, type: type)
         }
         
         alert.addAction(cancel)
@@ -101,7 +129,6 @@ class ViewController: UIViewController {
         
         present(alert, animated: true)
     }
-    
 }
 
 extension ViewController: UITableViewDelegate, UITableViewDataSource {

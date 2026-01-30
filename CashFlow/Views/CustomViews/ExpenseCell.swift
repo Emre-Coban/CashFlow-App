@@ -87,7 +87,17 @@ class ExpenseCell: UITableViewCell {
     
     func configure(with expense: Expense) {
         titleLabel.text = expense.title
-        amountLabel.text = "-$\(expense.amount)"
+        
+        switch expense.type {
+        case .income:
+            amountLabel.text = "+\(expense.amount.asCurrency())"
+            amountLabel.textColor = .systemGreen
+            iconImageView.image = UIImage(systemName: "banknote.fill")
+        case .expense:
+            amountLabel.text = "-\(expense.amount.asCurrency())"
+            amountLabel.textColor = .systemRed
+            iconImageView.image = UIImage(systemName: "cart.fill")
+        }
         
         let formatter = DateFormatter()
         formatter.dateFormat = "dd MMM yyyy"

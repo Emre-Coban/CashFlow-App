@@ -27,8 +27,14 @@ class ExpenseViewModel {
     }
     
     func totalExpense() -> Double {
-        let totalExpense = expenses.reduce(0.0) { $0 + $1.amount }
-        return totalExpense
+        return expenses.reduce(0.0) { result, expense in
+            switch expense.type {
+            case .income:
+                return result + expense.amount
+            case .expense:
+                return result - expense.amount
+            }
+        }
     }
     
     private func setupDatabase() {
@@ -55,8 +61,8 @@ class ExpenseViewModel {
         }
     }
     
-    func addExpense(title: String, amount: Double) {
-        let newExpense = Expense(title: title, amount: amount)
+    func addExpense(title: String, amount: Double, type: TransactionType) {
+        let newExpense = Expense(title: title, amount: amount, type: type)
         context?.insert(newExpense)
         
         // Verileri hemen kaydetmesi için
