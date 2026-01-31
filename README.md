@@ -1,7 +1,5 @@
 # 💸 CashFlow - Personal Finance Tracker
 
-![App Banner]([BURAYA_ANA_EKRAN_GORUNTUSU_GELECEK])
-
 [🇹🇷 Türkçe](#-türkçe) | [🇬🇧 English](#-english)
 
 ---
@@ -37,7 +35,7 @@ Bu proje, **Junior iOS Developer** yetkinliklerini sergilemek amacıyla, en gün
 
 ### 📦 Kurulum
 
-1.  Projeyi klonlayın: `git clone https://github.com/KULLANICI_ADIN/CashFlow-App.git`
+1.  Projeyi klonlayın: `git clone https://github.com/Emre-Coban/CashFlow-App.git`
 2.  `CashFlow.xcodeproj` dosyasını Xcode ile açın.
 3.  Simülatörü seçin ve `Cmd + R` ile çalıştırın.
 
@@ -74,7 +72,7 @@ This project demonstrates **Junior iOS Developer** competencies using the latest
 
 ### 📦 Installation
 
-1.  Clone the repo: `git clone https://github.com/YOUR_USERNAME/CashFlow-App.git`
+1.  Clone the repo: `git clone https://github.com/Emre-Coban/CashFlow-App.git`
 2.  Open `CashFlow.xcodeproj` in Xcode.
 3.  Select a simulator and press `Cmd + R` to run.
 
