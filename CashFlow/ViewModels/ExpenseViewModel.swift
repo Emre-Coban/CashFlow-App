@@ -11,6 +11,7 @@ import SwiftData
 class ExpenseViewModel {
     // Veriler burada tutulacak
     var expenses: [Expense] = []
+    private var allExpenses: [Expense] = []
     
     // Veritabanı araçları
     private var container: ModelContainer?
@@ -24,6 +25,25 @@ class ExpenseViewModel {
     init() {
         
         setupDatabase()
+    }
+    
+    // Dışarıdan bir seçim gelecek (0: All, 1: Income, 2: Expense)
+    func filterTransactions(by segmentIndex: Int) {
+        switch segmentIndex {
+        case 0:
+            expenses = allExpenses
+            
+        case 1:
+            expenses = allExpenses.filter { $0.type == .income }
+            
+        case 2:
+            expenses = allExpenses.filter { $0.type == .expense }
+            
+        default:
+            break
+        }
+        
+        didUpdate?()
     }
     
     func totalExpense() -> Double {
@@ -54,6 +74,7 @@ class ExpenseViewModel {
         
         do {
             let data = try context?.fetch(descriptor)
+            self.allExpenses = data ?? []
             self.expenses = data ?? []
             didUpdate?() // Arayüze haber ver
         } catch {

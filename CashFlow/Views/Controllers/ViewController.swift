@@ -19,6 +19,22 @@ class ViewController: UIViewController {
         return label
     }()
     
+    var segmentedControl: UISegmentedControl = {
+        // Öğeleri belirle
+        let items = ["All", "Income", "Expense"]
+        // Oluştur
+        let segment = UISegmentedControl(items: items)
+        // Varsayılan seçimi yap
+        segment.selectedSegmentIndex = 0
+        // Renkleri belirle
+        segment.backgroundColor = .systemGray6
+        segment.selectedSegmentTintColor = .systemBlue
+        // Yazı renklerini ayarla (Seçili: Beyaz, Normal: Siyah)
+        segment.setTitleTextAttributes([.foregroundColor: UIColor.black], for: .normal)
+        segment.setTitleTextAttributes([.foregroundColor: UIColor.white], for: .selected)
+        return segment
+    }()
+    
     private let tableView: UITableView = {
         let tableView = UITableView()
         tableView.register(ExpenseCell.self, forCellReuseIdentifier: "cell")
@@ -53,13 +69,20 @@ class ViewController: UIViewController {
     }
     
     private func setupHeader() {
-        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 100))
+        let headerView = UIView(frame: CGRect(x: 0, y: 0, width: view.frame.width, height: 130))
         headerView.backgroundColor = .systemBlue
         tableView.tableHeaderView = headerView
         
-        
         totalLabel.frame = CGRect(x: 20, y: 0, width: headerView.frame.width, height: headerView.frame.height)
         headerView.addSubview(totalLabel)
+        
+        segmentedControl.frame = CGRect(x: 10, y: 90, width: totalLabel.frame.width - 20, height: 30)
+        headerView.addSubview(segmentedControl)
+        segmentedControl.addTarget(self, action: #selector(segmentChanged), for: .valueChanged)
+    }
+    
+    @objc private func segmentChanged(_ sender: UISegmentedControl) {
+        viewModel.filterTransactions(by: sender.selectedSegmentIndex)
     }
     
     private func setupBindings() {
