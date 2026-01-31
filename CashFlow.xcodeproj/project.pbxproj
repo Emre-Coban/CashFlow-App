@@ -6,8 +6,21 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		B2FBB48D2F2EAF5100C81550 /* README.md in Resources */ = {isa = PBXBuildFile; fileRef = B2FBB4872F2EAF5100C81550 /* README.md */; };
+		B2FBB48E2F2EAF5100C81550 /* home-all.png in Resources */ = {isa = PBXBuildFile; fileRef = B2FBB4892F2EAF5100C81550 /* home-all.png */; };
+		B2FBB48F2F2EAF5100C81550 /* home-expense.png in Resources */ = {isa = PBXBuildFile; fileRef = B2FBB48A2F2EAF5100C81550 /* home-expense.png */; };
+		B2FBB4902F2EAF5100C81550 /* home-income.png in Resources */ = {isa = PBXBuildFile; fileRef = B2FBB48B2F2EAF5100C81550 /* home-income.png */; };
+		B2FBB4912F2EAF5100C81550 /* add-transaction.png in Resources */ = {isa = PBXBuildFile; fileRef = B2FBB4882F2EAF5100C81550 /* add-transaction.png */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		B298CE642F27F79400792517 /* CashFlow.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CashFlow.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		B2FBB4872F2EAF5100C81550 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
+		B2FBB4882F2EAF5100C81550 /* add-transaction.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "add-transaction.png"; sourceTree = "<group>"; };
+		B2FBB4892F2EAF5100C81550 /* home-all.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-all.png"; sourceTree = "<group>"; };
+		B2FBB48A2F2EAF5100C81550 /* home-expense.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-expense.png"; sourceTree = "<group>"; };
+		B2FBB48B2F2EAF5100C81550 /* home-income.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "home-income.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
@@ -45,6 +58,8 @@
 		B298CE5B2F27F79400792517 = {
 			isa = PBXGroup;
 			children = (
+				B2FBB4872F2EAF5100C81550 /* README.md */,
+				B2FBB48C2F2EAF5100C81550 /* screenshots */,
 				B298CE662F27F79400792517 /* CashFlow */,
 				B298CE652F27F79400792517 /* Products */,
 			);
@@ -56,6 +71,17 @@
 				B298CE642F27F79400792517 /* CashFlow.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		B2FBB48C2F2EAF5100C81550 /* screenshots */ = {
+			isa = PBXGroup;
+			children = (
+				B2FBB4882F2EAF5100C81550 /* add-transaction.png */,
+				B2FBB4892F2EAF5100C81550 /* home-all.png */,
+				B2FBB48A2F2EAF5100C81550 /* home-expense.png */,
+				B2FBB48B2F2EAF5100C81550 /* home-income.png */,
+			);
+			path = screenshots;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -122,6 +148,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				B2FBB48D2F2EAF5100C81550 /* README.md in Resources */,
+				B2FBB48E2F2EAF5100C81550 /* home-all.png in Resources */,
+				B2FBB48F2F2EAF5100C81550 /* home-expense.png in Resources */,
+				B2FBB4902F2EAF5100C81550 /* home-income.png in Resources */,
+				B2FBB4912F2EAF5100C81550 /* add-transaction.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
