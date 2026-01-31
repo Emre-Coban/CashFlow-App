@@ -65,7 +65,19 @@ class ViewController: UIViewController {
     private func updateUI() {
         tableView.reloadData()
         
-        totalLabel.text = "Total Expense: \(viewModel.totalExpense().asCurrency())"
+        let totalAmount = viewModel.totalExpense()
+        let formattedAmount = totalAmount.asCurrency()
+        
+        switch segmentedControl.selectedSegmentIndex {
+        case 0:
+            totalLabel.text = "Total Balance: \(formattedAmount)" // Genel Bakiye
+        case 1:
+            totalLabel.text = "Total Income: \(formattedAmount)" // Toplam Gelir
+        case 2:
+            totalLabel.text = "Total Expense: \(formattedAmount)" // Toplam Gider
+        default:
+            totalLabel.text = "Total: \(formattedAmount)"
+        }
     }
     
     private func setupHeader() {
